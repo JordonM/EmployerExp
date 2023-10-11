@@ -4,7 +4,7 @@ const express = require('express')
 const passport = require('passport')
 
 // pull in Mongoose model for employees
-const employee = require('../models/employee')
+const Employee = require('../models/employee')
 
 // this is a collection of methods that help us detect situations when we need
 // to throw a custom error
@@ -30,7 +30,7 @@ const router = express.Router()
 // INDEX
 // GET /employees
 router.get('/employees', requireToken, (req, res, next) => {
-	employee.find()
+	Employee.find()
 		.then((employees) => {
 			// `employees` will be an array of Mongoose documents
 			// we want to convert each one to a POJO, so we use `.map` to
@@ -47,7 +47,7 @@ router.get('/employees', requireToken, (req, res, next) => {
 // GET /employees/5a7db6c74d55bc51bdf39793
 router.get('/employees/:id', requireToken, (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
-	employee.findById(req.params.id)
+	Employee.findById(req.params.id)
 		.then(handle404)
 		// if `findById` is succesful, respond with 200 and "employee" JSON
 		.then((employee) => res.status(200).json({ employee: employee.toObject() }))
@@ -61,7 +61,7 @@ router.post('/employees', requireToken, (req, res, next) => {
 	// set owner of new employee to be current user
 	req.body.employee.owner = req.user.id
 
-	employee.create(req.body.employee)
+	Employee.create(req.body.employee)
 		// respond to succesful `create` with status 201 and JSON of new "employee"
 		.then((employee) => {
 			res.status(201).json({ employee: employee.toObject() })
@@ -79,7 +79,7 @@ router.patch('/employees/:id', requireToken, removeBlanks, (req, res, next) => {
 	// owner, prevent that by deleting that key/value pair
 	delete req.body.employee.owner
 
-	employee.findById(req.params.id)
+	Employee.findById(req.params.id)
 		.then(handle404)
 		.then((employee) => {
 			// pass the `req` object and the Mongoose record to `requireOwnership`
@@ -98,7 +98,7 @@ router.patch('/employees/:id', requireToken, removeBlanks, (req, res, next) => {
 // DESTROY
 // DELETE /employees/5a7db6c74d55bc51bdf39793
 router.delete('/employees/:id', requireToken, (req, res, next) => {
-	employee.findById(req.params.id)
+	Employee.findById(req.params.id)
 		.then(handle404)
 		.then((employee) => {
 			// throw an error if current user doesn't own `employee`
