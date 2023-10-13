@@ -72,7 +72,7 @@ router.post('/employees',  requireToken, (req, res, next) => {
 
 // UPDATE
 // PATCH /employees/
-router.patch('/employees/:id', removeBlanks, (req, res, next) => {
+router.patch('/employees/:id', requireToken, removeBlanks, (req, res, next) => {
 	// if the client attempts to change the `owner` property by including a new
 	// owner, prevent that by deleting that key/value pair
 	delete req.body.employee.owner
