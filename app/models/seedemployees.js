@@ -3,16 +3,11 @@ const Employee = require('./employee')
 const db = require('../../config/db')
 
 const startEmployees = [
-    { name: 'Sparky', type: 'dog', age: 2, adoptable: true},
-    { name: 'Leroy', type: 'dog', age: 10, adoptable: true},
-    { name: 'Biscuits', type: 'cat', age: 3, adoptable: true},
-    { name: 'Hulk Hogan', type: 'hamster', age: 1, adoptable: true}
+    { name: 'John', position: 'Manage', dob: 2, paid: true},
+
 ]
 
-// first connect to the db
-// then remove all employees without owners
-// then insert the startemployees
-// then ALWAYS close the connection from this file
+
 
 mongoose.connect(db, {
     useNewUrlParser: true

@@ -36,19 +36,7 @@ const employeeSchema = new mongoose.Schema(
 )
 
 
-employeeSchema.virtual('fullTitle').get(function () {
-	return `${this.name} the ${this.type}`
-})
-
-// this second virtual will tell us if the employee is a baby based on their age
-employeeSchema.virtual('isABaby').get(function () {
-	if (this.age < 5) {
-		return "Yeah, theyre just a baby"
-	} else if (this.age >= 5 && this.age < 10) {
-		return "Not really a baby, but theyre still a baby"
-	} else {
-		return "A good old employee(definitely still a baby)"
-	}
+employeeSchema.virtual('fullTitle').get(function () {	return `${this.name} the ${this.type}`
 })
 
 module.exports = mongoose.model('Employee', employeeSchema)
