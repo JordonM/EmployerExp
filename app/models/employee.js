@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 
 const wageSchema = require('./wage')
 
+const feedbackSchema = require('./feedback')
+
 const employeeSchema = new mongoose.Schema(
 	{
 		name: {
@@ -22,6 +24,7 @@ const employeeSchema = new mongoose.Schema(
 			default: false
 		},
 		wages: [wageSchema],
+		feedbacks: [feedbackSchema],
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',
